@@ -10,8 +10,8 @@
         android:id="@+id/begininterview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="132dp"
-        android:layout_marginBottom="340dp"
+        android:layout_marginEnd="536dp"
+        android:layout_marginBottom="136dp"
         android:text="Iniciar Encuesta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -28,16 +28,18 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/begininterview"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:srcCompat="@tools:sample/avatars" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/agregarpreguntafloating"
         android:layout_width="60dp"
         android:layout_height="65dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="204dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginBottom="124dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

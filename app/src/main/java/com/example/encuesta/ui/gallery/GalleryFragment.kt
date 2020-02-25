@@ -12,11 +12,15 @@ import androidx.navigation.fragment.findNavController
 import com.example.encuesta.R
 import com.example.encuesta.ui.slideshow.SlideshowFragmentArgs
 import com.example.encuesta.ui.slideshow.SlideshowFragmentDirections
+import com.example.encuesta.variable
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
 class GalleryFragment : Fragment() {
     private var root: View? = null
     private lateinit var galleryViewModel: GalleryViewModel
+    private val llamarvariable by lazy {
+        ViewModelProviders.of(activity!!).get(variable::class.java)
+    }
 
 
 
@@ -41,8 +45,9 @@ class GalleryFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item!!.itemId
         if (id == R.id.guardar) {
-            val action = GalleryFragmentDirections.actionNavGalleryToNavSlideshow2(ingresadaagregada.text.toString())
-            findNavController().navigate(action)
+            llamarvariable.mutablepreguntas.add(ingresadaagregada.text.toString())
+            findNavController().navigate((R.id.action_nav_gallery_to_nav_home))
+            //val action = GalleryFragmentDirections.actionNavGalleryToNavHome(ingresadaagregada.text.toString())
         }
         return super.onOptionsItemSelected(item)
     }

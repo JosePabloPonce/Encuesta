@@ -9,17 +9,26 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.encuesta.R
+import com.example.encuesta.variable
 import kotlinx.android.synthetic.main.fragment_slideshow.*
-import kotlinx.android.synthetic.main.fragment_slideshow.view.*
 import java.io.Serializable
 
 class SlideshowFragment : Fragment() {
 
 
-    val mutablepreguntas = mutableListOf<String>("¿Qué le pareció nuestro servicio?")
+    private val llamarvariable by lazy {
+        ViewModelProviders.of(activity!!).get(variable::class.java)
+    }
+
+    var estado = true
     var contador =0
+    var contadorfinales =0
+    var contadorrespuestas =1
     private var root: View? = null
     private lateinit var slideshowViewModel: SlideshowViewModel
 
@@ -36,21 +45,72 @@ class SlideshowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            val args = SlideshowFragmentArgs.fromBundle(it)
-            args.preguntatoca
-            mutablepreguntas.add(args.preguntatoca)
-                //preguntatoca.text= args.preguntatoca
+
+
+
+        if (llamarvariable.mutablepreguntas.size == 0){
+            preguntatoca.text = llamarvariable.mutablepreguntasfinales.get(contadorfinales)
+            contadorfinales++
         }
+        else{
+            preguntatoca.text = llamarvariable.mutablepreguntas.get(contador)
+            contador++
+
+        }
+
+            ratingBarcalificar.setVisibility(View.INVISIBLE)
+
+        if (estado ==false){
+
+
+
+        }
+
+
+
+
+
 
 
         cambiarpregunta.setOnClickListener{
-            if (contador < mutablepreguntas.size)
-            preguntatoca.text = mutablepreguntas.get(contador)
-            contador++
+
+            if (contador < llamarvariable.mutablepreguntas.size) {
+                preguntatoca.text = llamarvariable.mutablepreguntas.get(contador)
+                contador++
+                llamarvariable.mutablerespuestas.add("Pregunta"+contadorrespuestas)
+                llamarvariable.mutablerespuestas.add(respuestaescrita.text.toString())
+                contadorrespuestas++
+            }
 
 
+
+            else if (contadorfinales <2){
+                if (contadorfinales ==1){
+                    ratingBarcalificar.setVisibility(View.VISIBLE)
+                    respuestaescrita.setVisibility(View.INVISIBLE)
+                    textView3.setVisibility(View.INVISIBLE)
+                }
+                preguntatoca.text = llamarvariable.mutablepreguntasfinales.get(contadorfinales)
+                contadorfinales++
+                llamarvariable.mutablerespuestas.add("Pregunta"+contadorrespuestas)
+                llamarvariable.mutablerespuestas.add(respuestaescrita.text.toString())
+                contadorrespuestas++
+
+
+            }
+
+
+            else{
+                llamarvariable.contadorencuestas++
+                llamarvariable.calificacionfinal = ((llamarvariable.calificacionfinal.toFloat()+ratingBarcalificar.rating) / llamarvariable.contadorencuestas).toString()
+
+
+                findNavController().navigate(R.id.action_nav_slideshow_to_nav_tools)
+
+            }
         }
+
+
          //   preguntatoca.text = (mutablepreguntas.get(0))
 
 
@@ -60,17 +120,16 @@ class SlideshowFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item!!.itemId
         if (id == R.id.guardar){
-            Toast.makeText(activity, "sort", Toast.LENGTH_LONG).show()
+         //   arguments?.let {
+           //     val args = HomeFragmentArgs.fromBundle(it)
+             //   args.preguntahome
+               // llamarvariable.mutablepreguntas.add(args.preguntahome)
+                //preguntatoca.text= args.preguntatoca
+            //}
+
         }
         return super.onOptionsItemSelected(item)
     }
-
-
-
-
-
-
-
 
 
 

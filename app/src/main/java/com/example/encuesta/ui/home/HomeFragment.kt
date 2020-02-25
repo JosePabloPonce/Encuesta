@@ -10,22 +10,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.encuesta.R
+import com.example.encuesta.ui.slideshow.SlideshowFragmentArgs
+import com.example.encuesta.variable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
+    private val llamarvariable by lazy {
+        ViewModelProviders.of(activity!!).get(variable::class.java)
+    }
 
     private var root: View? = null
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
-
-
-
-
-
-
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -35,8 +35,7 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-        homeViewModel.text.observe(this, Observer {
-        })
+
 
         root!!.encuestaimagen.setImageResource(R.drawable.questions)
         return root
@@ -44,13 +43,13 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
-        addquestion.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_gallery))
         begininterview.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_slideshow))
+        agregarpreguntafloating.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_nav_home_to_nav_gallery))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item!!.itemId
 
         return super.onOptionsItemSelected(item)
     }
